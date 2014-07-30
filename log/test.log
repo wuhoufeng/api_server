@@ -1,0 +1,1181 @@
+  [1m[36m (74.0ms)[0m  [1mCREATE TABLE "schema_migrations" ("version" varchar(255) NOT NULL) [0m
+  [1m[35m (58.0ms)[0m  CREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Migrating to DeviseCreateUsers (20130821100223)
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36m (2.0ms)[0m  [1mCREATE TABLE "users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "email" varchar(255) DEFAULT '' NOT NULL, "encrypted_password" varchar(255) DEFAULT '' NOT NULL, "reset_password_token" varchar(255), "reset_password_sent_at" datetime, "remember_created_at" datetime, "sign_in_count" integer DEFAULT 0, "current_sign_in_at" datetime, "last_sign_in_at" datetime, "current_sign_in_ip" varchar(255), "last_sign_in_ip" varchar(255), "confirmation_token" varchar(255), "confirmed_at" datetime, "confirmation_sent_at" datetime, "unconfirmed_email" varchar(255), "authentication_token" varchar(255), "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35m (1.0ms)[0m  CREATE UNIQUE INDEX "index_users_on_email" ON "users" ("email")
+  [1m[36m (1.0ms)[0m  [1mCREATE UNIQUE INDEX "index_users_on_reset_password_token" ON "users" ("reset_password_token")[0m
+  [1m[35m (0.0ms)[0m  CREATE UNIQUE INDEX "index_users_on_confirmation_token" ON "users" ("confirmation_token")
+  [1m[36m (0.0ms)[0m  [1mCREATE UNIQUE INDEX "index_users_on_authentication_token" ON "users" ("authentication_token")[0m
+  [1m[35mSQL (1.0ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES (?)  [["version", "20130821100223"]]
+  [1m[36m (81.0ms)[0m  [1mcommit transaction[0m
+  [1m[35mActiveRecord::SchemaMigration Load (0.0ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36m (0.0ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mUser Exists (0.0ms)[0m  SELECT 1 AS one FROM "users" WHERE "users"."email" = 'asd@def.com' LIMIT 1
+  [1m[36mUser Load (0.0ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."confirmation_token" = 'Z4kyvgW49NgTx1KbSoHq' LIMIT 1[0m
+Binary data inserted for `string` type on column `encrypted_password`
+  [1m[35mSQL (37.0ms)[0m  INSERT INTO "users" ("authentication_token", "confirmation_sent_at", "confirmation_token", "created_at", "email", "encrypted_password", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)  [["authentication_token", "asd"], ["confirmation_sent_at", Fri, 27 Jun 2014 01:15:13 UTC +00:00], ["confirmation_token", "Z4kyvgW49NgTx1KbSoHq"], ["created_at", Fri, 27 Jun 2014 01:15:13 UTC +00:00], ["email", "asd@def.com"], ["encrypted_password", "$2a$04$54SEPH/l8p55tsNcM2GaaOCEcQKtDUp0tns0RTLCElHHAJS3jaY5."], ["updated_at", Fri, 27 Jun 2014 01:15:13 UTC +00:00]]
+  Rendered devise/mailer/confirmation_instructions.html.erb (4.0ms)
+
+Sent mail to asd@def.com (75.0ms)
+Date: Fri, 27 Jun 2014 09:15:14 +0800
+From: fengwujioutian@163.com
+Reply-To: fengwujioutian@163.com
+To: asd@def.com
+Message-ID: <53acc5a28b13_1388280e383619@PC201308121538.mail>
+Subject: Confirmation instructions
+Mime-Version: 1.0
+Content-Type: text/html;
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+<p>Welcome asd@def.com!</p>
+
+<p>You can confirm your account email through the link below:</p>
+
+<p><a href="http://localhost:3000/users/confirmation?confirmation_token=Z4kyvgW49NgTx1KbSoHq">Confirm my account</a></p>
+
+  [1m[36m (0.0ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (1.0ms)[0m  [1mUPDATE "users" SET "confirmation_token" = ?, "confirmed_at" = ?, "updated_at" = ? WHERE "users"."id" = 1[0m  [["confirmation_token", nil], ["confirmed_at", Fri, 27 Jun 2014 01:15:14 UTC +00:00], ["updated_at", Fri, 27 Jun 2014 01:15:14 UTC +00:00]]
+  [1m[35m (0.0ms)[0m  RELEASE SAVEPOINT active_record_1
+Processing by Api::V1::SessionsController#create as HTML
+  Parameters: {"user"=>{"email"=>"asd@def.com", "password"=>"[FILTERED]", "authentication_token"=>"asd"}}
+  [1m[36mUser Load (0.0ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."email" = 'asd@def.com' LIMIT 1[0m
+Completed 200 OK in 48ms (Views: 1.0ms | ActiveRecord: 0.0ms)
+  [1m[35mUser Load (0.0ms)[0m  SELECT "users".* FROM "users" WHERE "users"."email" = 'asd@def.com' LIMIT 1
+  [1m[36m (0.0ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.0ms)[0m  UPDATE "users" SET "last_sign_in_at" = ?, "current_sign_in_at" = ?, "last_sign_in_ip" = ?, "current_sign_in_ip" = ?, "sign_in_count" = ?, "updated_at" = ? WHERE "users"."id" = 1  [["last_sign_in_at", Fri, 27 Jun 2014 01:15:14 UTC +00:00], ["current_sign_in_at", Fri, 27 Jun 2014 01:15:14 UTC +00:00], ["last_sign_in_ip", "0.0.0.0"], ["current_sign_in_ip", "0.0.0.0"], ["sign_in_count", 1], ["updated_at", Fri, 27 Jun 2014 01:15:14 UTC +00:00]]
+  [1m[36m (0.0ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (1.0ms)[0m  rollback transaction
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  SAVEPOINT active_record_1
+  [1m[36mUser Exists (1.0ms)[0m  [1mSELECT 1 AS one FROM "users" WHERE "users"."email" = 'asd@def.com' LIMIT 1[0m
+  [1m[35mUser Load (0.0ms)[0m  SELECT "users".* FROM "users" WHERE "users"."confirmation_token" = 'HAw8cCFBzVZiUkosXvd6' LIMIT 1
+Binary data inserted for `string` type on column `encrypted_password`
+  [1m[36mSQL (17.0ms)[0m  [1mINSERT INTO "users" ("authentication_token", "confirmation_sent_at", "confirmation_token", "created_at", "email", "encrypted_password", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["authentication_token", "asd"], ["confirmation_sent_at", Fri, 27 Jun 2014 01:15:14 UTC +00:00], ["confirmation_token", "HAw8cCFBzVZiUkosXvd6"], ["created_at", Fri, 27 Jun 2014 01:15:14 UTC +00:00], ["email", "asd@def.com"], ["encrypted_password", "$2a$04$Nv2kXmUEjLk3FuCKttt/T.9WH1n3xAFklbDeH0H6LYvLeaTz7eC6G"], ["updated_at", Fri, 27 Jun 2014 01:15:14 UTC +00:00]]
+
+Sent mail to asd@def.com (5.0ms)
+Date: Fri, 27 Jun 2014 09:15:14 +0800
+From: fengwujioutian@163.com
+Reply-To: fengwujioutian@163.com
+To: asd@def.com
+Message-ID: <53acc5a231774_1388280e3837ca@PC201308121538.mail>
+Subject: Confirmation instructions
+Mime-Version: 1.0
+Content-Type: text/html;
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+<p>Welcome asd@def.com!</p>
+
+<p>You can confirm your account email through the link below:</p>
+
+<p><a href="http://localhost:3000/users/confirmation?confirmation_token=HAw8cCFBzVZiUkosXvd6">Confirm my account</a></p>
+
+  [1m[35m (1.0ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36m (0.0ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (1.0ms)[0m  UPDATE "users" SET "confirmation_token" = ?, "confirmed_at" = ?, "updated_at" = ? WHERE "users"."id" = 1  [["confirmation_token", nil], ["confirmed_at", Fri, 27 Jun 2014 01:15:14 UTC +00:00], ["updated_at", Fri, 27 Jun 2014 01:15:14 UTC +00:00]]
+  [1m[36m (0.0ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Processing by Api::V1::SessionsController#create as HTML
+  Parameters: {"user"=>{"email"=>"asd@sad.com", "password"=>"[FILTERED]"}}
+  [1m[35mUser Load (0.0ms)[0m  SELECT "users".* FROM "users" WHERE "users"."email" = 'asd@sad.com' LIMIT 1
+Completed 401 Unauthorized in 2ms (Views: 1.0ms | ActiveRecord: 0.0ms)
+  [1m[36mUser Load (0.0ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."email" = 'asd@sad.com' LIMIT 1[0m
+  [1m[35m (1.0ms)[0m  rollback transaction
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  SAVEPOINT active_record_1
+  [1m[36mUser Exists (0.0ms)[0m  [1mSELECT 1 AS one FROM "users" WHERE "users"."email" = 'asd@def.com' LIMIT 1[0m
+  [1m[35mUser Load (0.0ms)[0m  SELECT "users".* FROM "users" WHERE "users"."confirmation_token" = 'SKHFDpQoktTLxaQAFZQC' LIMIT 1
+Binary data inserted for `string` type on column `encrypted_password`
+  [1m[36mSQL (1.0ms)[0m  [1mINSERT INTO "users" ("authentication_token", "confirmation_sent_at", "confirmation_token", "created_at", "email", "encrypted_password", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["authentication_token", "asd"], ["confirmation_sent_at", Fri, 27 Jun 2014 01:15:14 UTC +00:00], ["confirmation_token", "SKHFDpQoktTLxaQAFZQC"], ["created_at", Fri, 27 Jun 2014 01:15:14 UTC +00:00], ["email", "asd@def.com"], ["encrypted_password", "$2a$04$FsTIecaYeA7aQcMqM1U3LOaeyQjulaWpYhNIuG/Ynck1Z2t48nsyi"], ["updated_at", Fri, 27 Jun 2014 01:15:14 UTC +00:00]]
+
+Sent mail to asd@def.com (5.0ms)
+Date: Fri, 27 Jun 2014 09:15:14 +0800
+From: fengwujioutian@163.com
+Reply-To: fengwujioutian@163.com
+To: asd@def.com
+Message-ID: <53acc5a23985e_1388280e383839@PC201308121538.mail>
+Subject: Confirmation instructions
+Mime-Version: 1.0
+Content-Type: text/html;
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+<p>Welcome asd@def.com!</p>
+
+<p>You can confirm your account email through the link below:</p>
+
+<p><a href="http://localhost:3000/users/confirmation?confirmation_token=SKHFDpQoktTLxaQAFZQC">Confirm my account</a></p>
+
+  [1m[35m (0.0ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36m (0.0ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (1.0ms)[0m  UPDATE "users" SET "confirmation_token" = ?, "confirmed_at" = ?, "updated_at" = ? WHERE "users"."id" = 1  [["confirmation_token", nil], ["confirmed_at", Fri, 27 Jun 2014 01:15:14 UTC +00:00], ["updated_at", Fri, 27 Jun 2014 01:15:14 UTC +00:00]]
+  [1m[36m (0.0ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Processing by Api::V1::SessionsController#destroy as HTML
+  Parameters: {"auth_token"=>"asd"}
+  [1m[35mUser Load (0.0ms)[0m  SELECT "users".* FROM "users" WHERE "users"."authentication_token" = 'asd' LIMIT 1
+  [1m[36mUser Load (0.0ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."authentication_token" = 'zpZe5ES3N4scNNpW8g5T' LIMIT 1[0m
+  [1m[35m (0.0ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (0.0ms)[0m  [1mUPDATE "users" SET "authentication_token" = ?, "updated_at" = ? WHERE "users"."id" = 1[0m  [["authentication_token", "zpZe5ES3N4scNNpW8g5T"], ["updated_at", Fri, 27 Jun 2014 01:15:14 UTC +00:00]]
+  [1m[35m (0.0ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36mUser Load (0.0ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1[0m
+  [1m[35m (0.0ms)[0m  SAVEPOINT active_record_1
+  [1m[36m (0.0ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Completed 200 OK in 8ms (Views: 1.0ms | ActiveRecord: 0.0ms)
+  [1m[35m (1.0ms)[0m  rollback transaction
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  SAVEPOINT active_record_1
+  [1m[36mUser Exists (0.0ms)[0m  [1mSELECT 1 AS one FROM "users" WHERE "users"."email" = 'asd@def.com' LIMIT 1[0m
+  [1m[35mUser Load (0.0ms)[0m  SELECT "users".* FROM "users" WHERE "users"."confirmation_token" = 'MsywvxfSkKGizYy9eZwV' LIMIT 1
+Binary data inserted for `string` type on column `encrypted_password`
+  [1m[36mSQL (1.0ms)[0m  [1mINSERT INTO "users" ("authentication_token", "confirmation_sent_at", "confirmation_token", "created_at", "email", "encrypted_password", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["authentication_token", "asd"], ["confirmation_sent_at", Fri, 27 Jun 2014 01:15:14 UTC +00:00], ["confirmation_token", "MsywvxfSkKGizYy9eZwV"], ["created_at", Fri, 27 Jun 2014 01:15:14 UTC +00:00], ["email", "asd@def.com"], ["encrypted_password", "$2a$04$dxJPPD4XV5rljWyNInlhLON6Rnj.Lww2h1m5RoleJl/IdQAsQi9Ae"], ["updated_at", Fri, 27 Jun 2014 01:15:14 UTC +00:00]]
+
+Sent mail to asd@def.com (5.0ms)
+Date: Fri, 27 Jun 2014 09:15:14 +0800
+From: fengwujioutian@163.com
+Reply-To: fengwujioutian@163.com
+To: asd@def.com
+Message-ID: <53acc5a249262_1388280e3839ca@PC201308121538.mail>
+Subject: Confirmation instructions
+Mime-Version: 1.0
+Content-Type: text/html;
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+<p>Welcome asd@def.com!</p>
+
+<p>You can confirm your account email through the link below:</p>
+
+<p><a href="http://localhost:3000/users/confirmation?confirmation_token=MsywvxfSkKGizYy9eZwV">Confirm my account</a></p>
+
+  [1m[35m (0.0ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36m (0.0ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (1.0ms)[0m  UPDATE "users" SET "confirmation_token" = ?, "confirmed_at" = ?, "updated_at" = ? WHERE "users"."id" = 1  [["confirmation_token", nil], ["confirmed_at", Fri, 27 Jun 2014 01:15:14 UTC +00:00], ["updated_at", Fri, 27 Jun 2014 01:15:14 UTC +00:00]]
+  [1m[36m (0.0ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Processing by Api::V1::SessionsController#destroy as JSON
+  [1m[35mUser Load (0.0ms)[0m  SELECT "users".* FROM "users" WHERE "users"."authentication_token" IS NULL LIMIT 1
+Filter chain halted as :validate_auth_token rendered or redirected
+Completed 401 Unauthorized in 1ms (Views: 0.0ms | ActiveRecord: 0.0ms)
+  [1m[36m (1.0ms)[0m  [1mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+Processing by Api::V1::RegistrationsController#create as HTML
+  Parameters: {"user"=>{"email"=>"asd@def.com", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]"}}
+  [1m[36m (0.0ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mUser Exists (0.0ms)[0m  SELECT 1 AS one FROM "users" WHERE "users"."email" = 'asd@def.com' LIMIT 1
+  [1m[36mUser Load (1.0ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."confirmation_token" = 'vcrogptstx8GiiNvPyqL' LIMIT 1[0m
+Binary data inserted for `string` type on column `encrypted_password`
+  [1m[35mSQL (1.0ms)[0m  INSERT INTO "users" ("confirmation_sent_at", "confirmation_token", "created_at", "email", "encrypted_password", "updated_at") VALUES (?, ?, ?, ?, ?, ?)  [["confirmation_sent_at", Fri, 27 Jun 2014 01:15:14 UTC +00:00], ["confirmation_token", "vcrogptstx8GiiNvPyqL"], ["created_at", Fri, 27 Jun 2014 01:15:14 UTC +00:00], ["email", "asd@def.com"], ["encrypted_password", "$2a$04$QwcTaAHPxUnYsiBiqg12JuAs2EEcI1JtgQZorl29sh6ZzA.pE.C4S"], ["updated_at", Fri, 27 Jun 2014 01:15:14 UTC +00:00]]
+
+Sent mail to asd@def.com (6.0ms)
+Date: Fri, 27 Jun 2014 09:15:14 +0800
+From: fengwujioutian@163.com
+Reply-To: fengwujioutian@163.com
+To: asd@def.com
+Message-ID: <53acc5a250f64_1388280e3840b@PC201308121538.mail>
+Subject: Confirmation instructions
+Mime-Version: 1.0
+Content-Type: text/html;
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+<p>Welcome asd@def.com!</p>
+
+<p>You can confirm your account email through the link below:</p>
+
+<p><a href="http://localhost:3000/users/confirmation?confirmation_token=vcrogptstx8GiiNvPyqL">Confirm my account</a></p>
+
+  [1m[36m (0.0ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Completed 200 OK in 23ms (Views: 0.0ms | ActiveRecord: 2.0ms)
+  [1m[35m (0.0ms)[0m  rollback transaction
+  [1m[36m (1.0ms)[0m  [1mbegin transaction[0m
+Processing by Api::V1::RegistrationsController#create as HTML
+  Parameters: {"user"=>{"email"=>"asd@def.com", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]"}}
+  [1m[35m (0.0ms)[0m  SAVEPOINT active_record_1
+  [1m[36mUser Exists (0.0ms)[0m  [1mSELECT 1 AS one FROM "users" WHERE "users"."email" = 'asd@def.com' LIMIT 1[0m
+  [1m[35m (0.0ms)[0m  ROLLBACK TO SAVEPOINT active_record_1
+Completed 401 Unauthorized in 7ms (Views: 0.0ms | ActiveRecord: 0.0ms)
+  [1m[36m (0.0ms)[0m  [1mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36m (0.0ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mUser Exists (0.0ms)[0m  SELECT 1 AS one FROM "users" WHERE "users"."email" = 'asd@def.com' LIMIT 1
+  [1m[36mUser Load (0.0ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."confirmation_token" = '2RhHyzYvkGvzB1kJvumG' LIMIT 1[0m
+Binary data inserted for `string` type on column `encrypted_password`
+  [1m[35mSQL (2.0ms)[0m  INSERT INTO "users" ("authentication_token", "confirmation_sent_at", "confirmation_token", "created_at", "email", "encrypted_password", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)  [["authentication_token", "asd"], ["confirmation_sent_at", Fri, 27 Jun 2014 01:15:14 UTC +00:00], ["confirmation_token", "2RhHyzYvkGvzB1kJvumG"], ["created_at", Fri, 27 Jun 2014 01:15:14 UTC +00:00], ["email", "asd@def.com"], ["encrypted_password", "$2a$04$9qjkMfnycDlCF1077jUk/ehdBJJzmtO6z.fsZtMOusyZoU1CwH/fq"], ["updated_at", Fri, 27 Jun 2014 01:15:14 UTC +00:00]]
+
+Sent mail to asd@def.com (5.0ms)
+Date: Fri, 27 Jun 2014 09:15:14 +0800
+From: fengwujioutian@163.com
+Reply-To: fengwujioutian@163.com
+To: asd@def.com
+Message-ID: <53acc5a259c06_1388280e3841c3@PC201308121538.mail>
+Subject: Confirmation instructions
+Mime-Version: 1.0
+Content-Type: text/html;
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+<p>Welcome asd@def.com!</p>
+
+<p>You can confirm your account email through the link below:</p>
+
+<p><a href="http://localhost:3000/users/confirmation?confirmation_token=2RhHyzYvkGvzB1kJvumG">Confirm my account</a></p>
+
+  [1m[36m (0.0ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (1.0ms)[0m  [1mUPDATE "users" SET "confirmation_token" = ?, "confirmed_at" = ?, "updated_at" = ? WHERE "users"."id" = 1[0m  [["confirmation_token", nil], ["confirmed_at", Fri, 27 Jun 2014 01:15:14 UTC +00:00], ["updated_at", Fri, 27 Jun 2014 01:15:14 UTC +00:00]]
+  [1m[35m (1.0ms)[0m  RELEASE SAVEPOINT active_record_1
+Processing by Api::V1::RegistrationsController#update as HTML
+  Parameters: {"user"=>{"email"=>"asd@def.com", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]", "authentication_token"=>"asd"}}
+  [1m[36mUser Load (0.0ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."authentication_token" IS NULL LIMIT 1[0m
+Filter chain halted as :validate_auth_token rendered or redirected
+Completed 401 Unauthorized in 1ms (Views: 0.0ms | ActiveRecord: 0.0ms)
+  [1m[35m (0.0ms)[0m  rollback transaction
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  SAVEPOINT active_record_1
+  [1m[36mUser Exists (0.0ms)[0m  [1mSELECT 1 AS one FROM "users" WHERE "users"."email" = 'asd@def.com' LIMIT 1[0m
+  [1m[35mUser Load (0.0ms)[0m  SELECT "users".* FROM "users" WHERE "users"."confirmation_token" = 'xvKJygXzmy5CBSFjowmk' LIMIT 1
+Binary data inserted for `string` type on column `encrypted_password`
+  [1m[36mSQL (1.0ms)[0m  [1mINSERT INTO "users" ("authentication_token", "confirmation_sent_at", "confirmation_token", "created_at", "email", "encrypted_password", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["authentication_token", "asd"], ["confirmation_sent_at", Fri, 27 Jun 2014 01:15:14 UTC +00:00], ["confirmation_token", "xvKJygXzmy5CBSFjowmk"], ["created_at", Fri, 27 Jun 2014 01:15:14 UTC +00:00], ["email", "asd@def.com"], ["encrypted_password", "$2a$04$QTMeLTtIrhWxgzz9AKHBd.A/7obIXNQhBOp9u4ECbvG9ht2nANbFG"], ["updated_at", Fri, 27 Jun 2014 01:15:14 UTC +00:00]]
+
+Sent mail to asd@def.com (4.0ms)
+Date: Fri, 27 Jun 2014 09:15:14 +0800
+From: fengwujioutian@163.com
+Reply-To: fengwujioutian@163.com
+To: asd@def.com
+Message-ID: <53acc5a26057f_1388280e384216@PC201308121538.mail>
+Subject: Confirmation instructions
+Mime-Version: 1.0
+Content-Type: text/html;
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+<p>Welcome asd@def.com!</p>
+
+<p>You can confirm your account email through the link below:</p>
+
+<p><a href="http://localhost:3000/users/confirmation?confirmation_token=xvKJygXzmy5CBSFjowmk">Confirm my account</a></p>
+
+  [1m[35m (0.0ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36m (0.0ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (1.0ms)[0m  UPDATE "users" SET "confirmation_token" = ?, "confirmed_at" = ?, "updated_at" = ? WHERE "users"."id" = 1  [["confirmation_token", nil], ["confirmed_at", Fri, 27 Jun 2014 01:15:14 UTC +00:00], ["updated_at", Fri, 27 Jun 2014 01:15:14 UTC +00:00]]
+  [1m[36m (0.0ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Processing by Api::V1::RegistrationsController#update as HTML
+  Parameters: {"user"=>{"email"=>"asd@def.com", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]", "authentication_token"=>"asd"}, "auth_token"=>"asd"}
+  [1m[35mUser Load (0.0ms)[0m  SELECT "users".* FROM "users" WHERE "users"."authentication_token" = 'asd' LIMIT 1
+{"email"=>"asd@def.com", "password"=>"wrong password", "password_confirmation"=>"password", "authentication_token"=>"asd"}
+Unpermitted parameters: authentication_token
+Completed 401 Unauthorized in 6ms (Views: 0.0ms | ActiveRecord: 0.0ms)
+  [1m[36m (1.0ms)[0m  [1mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36m (0.0ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mUser Exists (0.0ms)[0m  SELECT 1 AS one FROM "users" WHERE "users"."email" = 'asd@def.com' LIMIT 1
+  [1m[36mUser Load (0.0ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."confirmation_token" = 'ED1HzE46z1xjdQmcsw3o' LIMIT 1[0m
+Binary data inserted for `string` type on column `encrypted_password`
+  [1m[35mSQL (1.0ms)[0m  INSERT INTO "users" ("authentication_token", "confirmation_sent_at", "confirmation_token", "created_at", "email", "encrypted_password", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)  [["authentication_token", "asd"], ["confirmation_sent_at", Fri, 27 Jun 2014 01:15:14 UTC +00:00], ["confirmation_token", "ED1HzE46z1xjdQmcsw3o"], ["created_at", Fri, 27 Jun 2014 01:15:14 UTC +00:00], ["email", "asd@def.com"], ["encrypted_password", "$2a$04$iv04XxowTrWGcMtLldfi1.h11vZs3bdx0sjQMc4vslXiUBcFZLY6y"], ["updated_at", Fri, 27 Jun 2014 01:15:14 UTC +00:00]]
+
+Sent mail to asd@def.com (5.0ms)
+Date: Fri, 27 Jun 2014 09:15:14 +0800
+From: fengwujioutian@163.com
+Reply-To: fengwujioutian@163.com
+To: asd@def.com
+Message-ID: <53acc5a267e99_1388280e3843c@PC201308121538.mail>
+Subject: Confirmation instructions
+Mime-Version: 1.0
+Content-Type: text/html;
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+<p>Welcome asd@def.com!</p>
+
+<p>You can confirm your account email through the link below:</p>
+
+<p><a href="http://localhost:3000/users/confirmation?confirmation_token=ED1HzE46z1xjdQmcsw3o">Confirm my account</a></p>
+
+  [1m[36m (0.0ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (1.0ms)[0m  [1mUPDATE "users" SET "confirmation_token" = ?, "confirmed_at" = ?, "updated_at" = ? WHERE "users"."id" = 1[0m  [["confirmation_token", nil], ["confirmed_at", Fri, 27 Jun 2014 01:15:14 UTC +00:00], ["updated_at", Fri, 27 Jun 2014 01:15:14 UTC +00:00]]
+  [1m[35m (0.0ms)[0m  RELEASE SAVEPOINT active_record_1
+Processing by Api::V1::RegistrationsController#update as HTML
+  Parameters: {"user"=>{"email"=>"asd@def.com", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]", "current_password"=>"[FILTERED]"}, "auth_token"=>"asd"}
+  [1m[36mUser Load (0.0ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."authentication_token" = 'asd' LIMIT 1[0m
+{"email"=>"asd@def.com", "password"=>"new_password", "password_confirmation"=>"new_password", "current_password"=>"password"}
+  [1m[35m (0.0ms)[0m  SAVEPOINT active_record_1
+Binary data inserted for `string` type on column `encrypted_password`
+  [1m[36mSQL (0.0ms)[0m  [1mUPDATE "users" SET "encrypted_password" = ?, "updated_at" = ? WHERE "users"."id" = 1[0m  [["encrypted_password", "$2a$04$.xFi56ydGGqAqIvD8M8TL.uLBjuZl1d01MW0I14CeFxwu6.O0Mr5a"], ["updated_at", Fri, 27 Jun 2014 01:15:14 UTC +00:00]]
+  [1m[35m (0.0ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36m (0.0ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.0ms)[0m  UPDATE "users" SET "last_sign_in_at" = ?, "current_sign_in_at" = ?, "last_sign_in_ip" = ?, "current_sign_in_ip" = ?, "sign_in_count" = ?, "updated_at" = ? WHERE "users"."id" = 1  [["last_sign_in_at", Fri, 27 Jun 2014 01:15:14 UTC +00:00], ["current_sign_in_at", Fri, 27 Jun 2014 01:15:14 UTC +00:00], ["last_sign_in_ip", "0.0.0.0"], ["current_sign_in_ip", "0.0.0.0"], ["sign_in_count", 1], ["updated_at", Fri, 27 Jun 2014 01:15:14 UTC +00:00]]
+  [1m[36m (1.0ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Completed 200 OK in 8ms (Views: 0.0ms | ActiveRecord: 1.0ms)
+  [1m[35m (1.0ms)[0m  rollback transaction
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  SAVEPOINT active_record_1
+  [1m[36mUser Exists (0.0ms)[0m  [1mSELECT 1 AS one FROM "users" WHERE "users"."email" = 'asd@def.com' LIMIT 1[0m
+  [1m[35mUser Load (0.0ms)[0m  SELECT "users".* FROM "users" WHERE "users"."confirmation_token" = 'rxysXGZ48StpH3VSyVUg' LIMIT 1
+Binary data inserted for `string` type on column `encrypted_password`
+  [1m[36mSQL (1.0ms)[0m  [1mINSERT INTO "users" ("confirmation_sent_at", "confirmation_token", "created_at", "email", "encrypted_password", "updated_at") VALUES (?, ?, ?, ?, ?, ?)[0m  [["confirmation_sent_at", Fri, 27 Jun 2014 01:15:14 UTC +00:00], ["confirmation_token", "rxysXGZ48StpH3VSyVUg"], ["created_at", Fri, 27 Jun 2014 01:15:14 UTC +00:00], ["email", "asd@def.com"], ["encrypted_password", "$2a$04$eO2oYUgm/d9X3Kkr5GtG1OLYdEUhLZOz0TpQM7gEKvRku1EC1PejS"], ["updated_at", Fri, 27 Jun 2014 01:15:14 UTC +00:00]]
+
+Sent mail to asd@def.com (5.0ms)
+Date: Fri, 27 Jun 2014 09:15:14 +0800
+From: fengwujioutian@163.com
+Reply-To: fengwujioutian@163.com
+To: asd@def.com
+Message-ID: <53acc5a27036b_1388280e3844d4@PC201308121538.mail>
+Subject: Confirmation instructions
+Mime-Version: 1.0
+Content-Type: text/html;
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+<p>Welcome asd@def.com!</p>
+
+<p>You can confirm your account email through the link below:</p>
+
+<p><a href="http://localhost:3000/users/confirmation?confirmation_token=rxysXGZ48StpH3VSyVUg">Confirm my account</a></p>
+
+  [1m[35m (0.0ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36m (0.0ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.0ms)[0m  UPDATE "users" SET "confirmation_token" = ?, "confirmed_at" = ?, "updated_at" = ? WHERE "users"."id" = 1  [["confirmation_token", nil], ["confirmed_at", Fri, 27 Jun 2014 01:15:14 UTC +00:00], ["updated_at", Fri, 27 Jun 2014 01:15:14 UTC +00:00]]
+  [1m[36m (0.0ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Processing by Api::V1::PasswordsController#create as HTML
+  Parameters: {"user"=>{"email"=>"asd@def.com"}}
+  [1m[35mUser Load (0.0ms)[0m  SELECT "users".* FROM "users" WHERE "users"."email" = 'asd@def.com' LIMIT 1
+  [1m[36mUser Load (0.0ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."reset_password_token" = 'yoKmUK4LRFjpfMwokaQs' LIMIT 1[0m
+  [1m[35m (0.0ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (0.0ms)[0m  [1mUPDATE "users" SET "reset_password_token" = ?, "reset_password_sent_at" = ?, "updated_at" = ? WHERE "users"."id" = 1[0m  [["reset_password_token", "yoKmUK4LRFjpfMwokaQs"], ["reset_password_sent_at", Fri, 27 Jun 2014 01:15:14 UTC +00:00], ["updated_at", Fri, 27 Jun 2014 01:15:14 UTC +00:00]]
+  [1m[35m (0.0ms)[0m  RELEASE SAVEPOINT active_record_1
+
+Sent mail to asd@def.com (5.0ms)
+Date: Fri, 27 Jun 2014 09:15:14 +0800
+From: fengwujioutian@163.com
+Reply-To: fengwujioutian@163.com
+To: asd@def.com
+Message-ID: <53acc5a27806d_1388280e384513@PC201308121538.mail>
+Subject: Reset password instructions
+Mime-Version: 1.0
+Content-Type: text/html;
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+<p>Hello asd@def.com!</p>
+
+<p>Someone has requested a link to change your password. You can do this through the link below.</p>
+
+<p><a href="http://localhost:3000/users/password/edit?reset_password_token=yoKmUK4LRFjpfMwokaQs">Change my password</a></p>
+
+<p>If you didn't request this, please ignore this email.</p>
+<p>Your password won't change until you access the link above and create a new one.</p>
+
+Completed 200 OK in 28ms (Views: 0.0ms | ActiveRecord: 0.0ms)
+  [1m[36m (0.0ms)[0m  [1mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36m (0.0ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mUser Exists (0.0ms)[0m  SELECT 1 AS one FROM "users" WHERE "users"."email" = 'asd@def.com' LIMIT 1
+  [1m[36mUser Load (0.0ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."confirmation_token" = 'jSmEez3hddF5Ucrj6TpN' LIMIT 1[0m
+Binary data inserted for `string` type on column `encrypted_password`
+  [1m[35mSQL (1.0ms)[0m  INSERT INTO "users" ("confirmation_sent_at", "confirmation_token", "created_at", "email", "encrypted_password", "updated_at") VALUES (?, ?, ?, ?, ?, ?)  [["confirmation_sent_at", Fri, 27 Jun 2014 01:15:14 UTC +00:00], ["confirmation_token", "jSmEez3hddF5Ucrj6TpN"], ["created_at", Fri, 27 Jun 2014 01:15:14 UTC +00:00], ["email", "asd@def.com"], ["encrypted_password", "$2a$04$JeGIlrzbq9TbvLGWgh2che0/P5Mx.vHggLTZq3bSPq/VlS4934SK6"], ["updated_at", Fri, 27 Jun 2014 01:15:14 UTC +00:00]]
+
+Sent mail to asd@def.com (5.0ms)
+Date: Fri, 27 Jun 2014 09:15:14 +0800
+From: fengwujioutian@163.com
+Reply-To: fengwujioutian@163.com
+To: asd@def.com
+Message-ID: <53acc5a28247f_1388280e384612@PC201308121538.mail>
+Subject: Confirmation instructions
+Mime-Version: 1.0
+Content-Type: text/html;
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+<p>Welcome asd@def.com!</p>
+
+<p>You can confirm your account email through the link below:</p>
+
+<p><a href="http://localhost:3000/users/confirmation?confirmation_token=jSmEez3hddF5Ucrj6TpN">Confirm my account</a></p>
+
+  [1m[36m (0.0ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (1.0ms)[0m  [1mUPDATE "users" SET "confirmation_token" = ?, "confirmed_at" = ?, "updated_at" = ? WHERE "users"."id" = 1[0m  [["confirmation_token", nil], ["confirmed_at", Fri, 27 Jun 2014 01:15:14 UTC +00:00], ["updated_at", Fri, 27 Jun 2014 01:15:14 UTC +00:00]]
+  [1m[35m (0.0ms)[0m  RELEASE SAVEPOINT active_record_1
+Processing by Api::V1::PasswordsController#create as HTML
+  Parameters: {"user"=>{"email"=>"abc@def.com"}}
+  [1m[36mUser Load (1.0ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."email" = 'abc@def.com' LIMIT 1[0m
+Completed 422 Unprocessable Entity in 3ms (Views: 0.0ms | ActiveRecord: 1.0ms)
+  [1m[35m (0.0ms)[0m  rollback transaction
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36m (0.0ms)[0m  [1mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36m (0.0ms)[0m  [1mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36m (1.0ms)[0m  [1mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36m (0.0ms)[0m  [1mrollback transaction[0m
+  [1m[35m (1.0ms)[0m  begin transaction
+  [1m[36m (0.0ms)[0m  [1mrollback transaction[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36m (0.0ms)[0m  [1mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36m (0.0ms)[0m  [1mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36m (0.0ms)[0m  [1mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36m (0.0ms)[0m  [1mrollback transaction[0m
+  [1m[35m (1.0ms)[0m  begin transaction
+  [1m[36m (0.0ms)[0m  [1mrollback transaction[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36m (0.0ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mUser Exists (0.0ms)[0m  SELECT 1 AS one FROM "users" WHERE "users"."email" = 'asd@def.com' LIMIT 1
+  [1m[36mUser Load (0.0ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."confirmation_token" = 'zxhDDLYtphvhxyFWKM33' LIMIT 1[0m
+Binary data inserted for `string` type on column `encrypted_password`
+  [1m[35mSQL (13.0ms)[0m  INSERT INTO "users" ("authentication_token", "confirmation_sent_at", "confirmation_token", "created_at", "email", "encrypted_password", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)  [["authentication_token", "asd"], ["confirmation_sent_at", Mon, 30 Jun 2014 01:59:57 UTC +00:00], ["confirmation_token", "zxhDDLYtphvhxyFWKM33"], ["created_at", Mon, 30 Jun 2014 01:59:57 UTC +00:00], ["email", "asd@def.com"], ["encrypted_password", "$2a$04$3x2hjoOIgZKl0wrnnZTBHuvxJg2O0ZpFk/FSgmOK5BzA1BoRvnmLy"], ["updated_at", Mon, 30 Jun 2014 01:59:57 UTC +00:00]]
+  Rendered devise/mailer/confirmation_instructions.html.erb (3.0ms)
+
+Sent mail to asd@def.com (94.0ms)
+Date: Mon, 30 Jun 2014 09:59:59 +0800
+From: fengwujioutian@163.com
+Reply-To: fengwujioutian@163.com
+To: asd@def.com
+Message-ID: <53b0c49f35135_ccc2f0e40464f8@PC201308121538.mail>
+Subject: Confirmation instructions
+Mime-Version: 1.0
+Content-Type: text/html;
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+<p>Welcome asd@def.com!</p>
+
+<p>You can confirm your account email through the link below:</p>
+
+<p><a href="http://localhost:3000/users/confirmation?confirmation_token=zxhDDLYtphvhxyFWKM33">Confirm my account</a></p>
+
+  [1m[36m (1.0ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (1.0ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (2.0ms)[0m  [1mUPDATE "users" SET "confirmation_token" = ?, "confirmed_at" = ?, "updated_at" = ? WHERE "users"."id" = 1[0m  [["confirmation_token", nil], ["confirmed_at", Mon, 30 Jun 2014 01:59:59 UTC +00:00], ["updated_at", Mon, 30 Jun 2014 01:59:59 UTC +00:00]]
+  [1m[35m (0.0ms)[0m  RELEASE SAVEPOINT active_record_1
+Processing by Api::V1::SessionsController#destroy as JSON
+  [1m[36mUser Load (0.0ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."authentication_token" IS NULL LIMIT 1[0m
+Filter chain halted as :validate_auth_token rendered or redirected
+Completed 401 Unauthorized in 2ms (Views: 0.0ms | ActiveRecord: 0.0ms)
+  [1m[35m (0.0ms)[0m  rollback transaction
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  SAVEPOINT active_record_1
+  [1m[36mUser Exists (0.0ms)[0m  [1mSELECT 1 AS one FROM "users" WHERE "users"."email" = 'asd@def.com' LIMIT 1[0m
+  [1m[35mUser Load (0.0ms)[0m  SELECT "users".* FROM "users" WHERE "users"."confirmation_token" = 'yXsxqWu2vYTVssxpqKbK' LIMIT 1
+Binary data inserted for `string` type on column `encrypted_password`
+  [1m[36mSQL (2.0ms)[0m  [1mINSERT INTO "users" ("authentication_token", "confirmation_sent_at", "confirmation_token", "created_at", "email", "encrypted_password", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["authentication_token", "asd"], ["confirmation_sent_at", Mon, 30 Jun 2014 01:59:59 UTC +00:00], ["confirmation_token", "yXsxqWu2vYTVssxpqKbK"], ["created_at", Mon, 30 Jun 2014 01:59:59 UTC +00:00], ["email", "asd@def.com"], ["encrypted_password", "$2a$04$wyNFkdLB2y/bXPQ2I8woEeCqlSU/QQqsZYFRIXWLNd.tdB2H42IFS"], ["updated_at", Mon, 30 Jun 2014 01:59:59 UTC +00:00]]
+
+Sent mail to asd@def.com (6.0ms)
+Date: Mon, 30 Jun 2014 09:59:59 +0800
+From: fengwujioutian@163.com
+Reply-To: fengwujioutian@163.com
+To: asd@def.com
+Message-ID: <53b0c49f56c4d_ccc2f0e4046557@PC201308121538.mail>
+Subject: Confirmation instructions
+Mime-Version: 1.0
+Content-Type: text/html;
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+<p>Welcome asd@def.com!</p>
+
+<p>You can confirm your account email through the link below:</p>
+
+<p><a href="http://localhost:3000/users/confirmation?confirmation_token=yXsxqWu2vYTVssxpqKbK">Confirm my account</a></p>
+
+  [1m[35m (0.0ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36m (0.0ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (1.0ms)[0m  UPDATE "users" SET "confirmation_token" = ?, "confirmed_at" = ?, "updated_at" = ? WHERE "users"."id" = 1  [["confirmation_token", nil], ["confirmed_at", Mon, 30 Jun 2014 01:59:59 UTC +00:00], ["updated_at", Mon, 30 Jun 2014 01:59:59 UTC +00:00]]
+  [1m[36m (0.0ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Processing by Api::V1::SessionsController#destroy as HTML
+  Parameters: {"auth_token"=>"asd"}
+  [1m[35mUser Load (1.0ms)[0m  SELECT "users".* FROM "users" WHERE "users"."authentication_token" = 'asd' LIMIT 1
+  [1m[36mUser Load (0.0ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."authentication_token" = '4HUqmuq6C8yRvtFBT5qH' LIMIT 1[0m
+  [1m[35m (0.0ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (0.0ms)[0m  [1mUPDATE "users" SET "authentication_token" = ?, "updated_at" = ? WHERE "users"."id" = 1[0m  [["authentication_token", "4HUqmuq6C8yRvtFBT5qH"], ["updated_at", Mon, 30 Jun 2014 01:59:59 UTC +00:00]]
+  [1m[35m (0.0ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36mUser Load (0.0ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1[0m
+  [1m[35m (0.0ms)[0m  SAVEPOINT active_record_1
+  [1m[36m (0.0ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Completed 200 OK in 8ms (Views: 1.0ms | ActiveRecord: 1.0ms)
+  [1m[35m (1.0ms)[0m  rollback transaction
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  SAVEPOINT active_record_1
+  [1m[36mUser Exists (0.0ms)[0m  [1mSELECT 1 AS one FROM "users" WHERE "users"."email" = 'asd@def.com' LIMIT 1[0m
+  [1m[35mUser Load (0.0ms)[0m  SELECT "users".* FROM "users" WHERE "users"."confirmation_token" = 'V1LeeDGCDzK6yjgNS7re' LIMIT 1
+Binary data inserted for `string` type on column `encrypted_password`
+  [1m[36mSQL (1.0ms)[0m  [1mINSERT INTO "users" ("authentication_token", "confirmation_sent_at", "confirmation_token", "created_at", "email", "encrypted_password", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["authentication_token", "asd"], ["confirmation_sent_at", Mon, 30 Jun 2014 01:59:59 UTC +00:00], ["confirmation_token", "V1LeeDGCDzK6yjgNS7re"], ["created_at", Mon, 30 Jun 2014 01:59:59 UTC +00:00], ["email", "asd@def.com"], ["encrypted_password", "$2a$04$XWtBuFrFcEM/B6Pa7h310eRF3NrLN3Uh8ORLodwCDZRxiPhaa84g2"], ["updated_at", Mon, 30 Jun 2014 01:59:59 UTC +00:00]]
+
+Sent mail to asd@def.com (5.0ms)
+Date: Mon, 30 Jun 2014 09:59:59 +0800
+From: fengwujioutian@163.com
+Reply-To: fengwujioutian@163.com
+To: asd@def.com
+Message-ID: <53b0c49f66651_ccc2f0e4046616@PC201308121538.mail>
+Subject: Confirmation instructions
+Mime-Version: 1.0
+Content-Type: text/html;
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+<p>Welcome asd@def.com!</p>
+
+<p>You can confirm your account email through the link below:</p>
+
+<p><a href="http://localhost:3000/users/confirmation?confirmation_token=V1LeeDGCDzK6yjgNS7re">Confirm my account</a></p>
+
+  [1m[35m (0.0ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36m (0.0ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (1.0ms)[0m  UPDATE "users" SET "confirmation_token" = ?, "confirmed_at" = ?, "updated_at" = ? WHERE "users"."id" = 1  [["confirmation_token", nil], ["confirmed_at", Mon, 30 Jun 2014 01:59:59 UTC +00:00], ["updated_at", Mon, 30 Jun 2014 01:59:59 UTC +00:00]]
+  [1m[36m (0.0ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Processing by Api::V1::SessionsController#create as HTML
+  Parameters: {"user"=>{"email"=>"asd@sad.com", "password"=>"[FILTERED]"}}
+  [1m[35mUser Load (0.0ms)[0m  SELECT "users".* FROM "users" WHERE "users"."email" = 'asd@sad.com' LIMIT 1
+Completed 401 Unauthorized in 6ms (Views: 0.0ms | ActiveRecord: 0.0ms)
+  [1m[36mUser Load (0.0ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."email" = 'asd@sad.com' LIMIT 1[0m
+  [1m[35m (1.0ms)[0m  rollback transaction
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  SAVEPOINT active_record_1
+  [1m[36mUser Exists (0.0ms)[0m  [1mSELECT 1 AS one FROM "users" WHERE "users"."email" = 'asd@def.com' LIMIT 1[0m
+  [1m[35mUser Load (0.0ms)[0m  SELECT "users".* FROM "users" WHERE "users"."confirmation_token" = 'Wruux6pqk9VV7oyjPW4k' LIMIT 1
+Binary data inserted for `string` type on column `encrypted_password`
+  [1m[36mSQL (1.0ms)[0m  [1mINSERT INTO "users" ("authentication_token", "confirmation_sent_at", "confirmation_token", "created_at", "email", "encrypted_password", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["authentication_token", "asd"], ["confirmation_sent_at", Mon, 30 Jun 2014 01:59:59 UTC +00:00], ["confirmation_token", "Wruux6pqk9VV7oyjPW4k"], ["created_at", Mon, 30 Jun 2014 01:59:59 UTC +00:00], ["email", "asd@def.com"], ["encrypted_password", "$2a$04$0SCuqZnPEOQasgeQzhhaLe.1/4m8ZfiKNEO/hbM/gqDUFu7P6lbo6"], ["updated_at", Mon, 30 Jun 2014 01:59:59 UTC +00:00]]
+
+Sent mail to asd@def.com (6.0ms)
+Date: Mon, 30 Jun 2014 09:59:59 +0800
+From: fengwujioutian@163.com
+Reply-To: fengwujioutian@163.com
+To: asd@def.com
+Message-ID: <53b0c49f6f6db_ccc2f0e40467ae@PC201308121538.mail>
+Subject: Confirmation instructions
+Mime-Version: 1.0
+Content-Type: text/html;
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+<p>Welcome asd@def.com!</p>
+
+<p>You can confirm your account email through the link below:</p>
+
+<p><a href="http://localhost:3000/users/confirmation?confirmation_token=Wruux6pqk9VV7oyjPW4k">Confirm my account</a></p>
+
+  [1m[35m (0.0ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36m (0.0ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (1.0ms)[0m  UPDATE "users" SET "confirmation_token" = ?, "confirmed_at" = ?, "updated_at" = ? WHERE "users"."id" = 1  [["confirmation_token", nil], ["confirmed_at", Mon, 30 Jun 2014 01:59:59 UTC +00:00], ["updated_at", Mon, 30 Jun 2014 01:59:59 UTC +00:00]]
+  [1m[36m (0.0ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Processing by Api::V1::SessionsController#create as HTML
+  Parameters: {"user"=>{"email"=>"asd@def.com", "password"=>"[FILTERED]", "authentication_token"=>"asd"}}
+  [1m[35mUser Load (1.0ms)[0m  SELECT "users".* FROM "users" WHERE "users"."email" = 'asd@def.com' LIMIT 1
+Completed 200 OK in 10ms (Views: 0.0ms | ActiveRecord: 1.0ms)
+  [1m[36mUser Load (0.0ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."email" = 'asd@def.com' LIMIT 1[0m
+  [1m[35m (1.0ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (0.0ms)[0m  [1mUPDATE "users" SET "last_sign_in_at" = ?, "current_sign_in_at" = ?, "last_sign_in_ip" = ?, "current_sign_in_ip" = ?, "sign_in_count" = ?, "updated_at" = ? WHERE "users"."id" = 1[0m  [["last_sign_in_at", Mon, 30 Jun 2014 01:59:59 UTC +00:00], ["current_sign_in_at", Mon, 30 Jun 2014 01:59:59 UTC +00:00], ["last_sign_in_ip", "0.0.0.0"], ["current_sign_in_ip", "0.0.0.0"], ["sign_in_count", 1], ["updated_at", Mon, 30 Jun 2014 01:59:59 UTC +00:00]]
+  [1m[35m (0.0ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36m (0.0ms)[0m  [1mrollback transaction[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36m (0.0ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mUser Exists (0.0ms)[0m  SELECT 1 AS one FROM "users" WHERE "users"."email" = 'asd@def.com' LIMIT 1
+  [1m[36mUser Load (0.0ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."confirmation_token" = '96spqV9UuPxCkvDgQMLw' LIMIT 1[0m
+Binary data inserted for `string` type on column `encrypted_password`
+  [1m[35mSQL (4.0ms)[0m  INSERT INTO "users" ("authentication_token", "confirmation_sent_at", "confirmation_token", "created_at", "email", "encrypted_password", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)  [["authentication_token", "asd"], ["confirmation_sent_at", Mon, 30 Jun 2014 02:00:39 UTC +00:00], ["confirmation_token", "96spqV9UuPxCkvDgQMLw"], ["created_at", Mon, 30 Jun 2014 02:00:39 UTC +00:00], ["email", "asd@def.com"], ["encrypted_password", "$2a$04$VaeM7me.qfHqdCpzvL8VYuzA22obX/.cWz3qv58NdchWAC.AA1sDK"], ["updated_at", Mon, 30 Jun 2014 02:00:39 UTC +00:00]]
+  Rendered devise/mailer/confirmation_instructions.html.erb (2.0ms)
+
+Sent mail to asd@def.com (11.0ms)
+Date: Mon, 30 Jun 2014 10:00:40 +0800
+From: fengwujioutian@163.com
+Reply-To: fengwujioutian@163.com
+To: asd@def.com
+Message-ID: <53b0c4c834ea6_af81d0e48815f0@PC201308121538.mail>
+Subject: Confirmation instructions
+Mime-Version: 1.0
+Content-Type: text/html;
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+<p>Welcome asd@def.com!</p>
+
+<p>You can confirm your account email through the link below:</p>
+
+<p><a href="http://localhost:3000/users/confirmation?confirmation_token=96spqV9UuPxCkvDgQMLw">Confirm my account</a></p>
+
+  [1m[36m (0.0ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (1.0ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (1.0ms)[0m  [1mUPDATE "users" SET "confirmation_token" = ?, "confirmed_at" = ?, "updated_at" = ? WHERE "users"."id" = 1[0m  [["confirmation_token", nil], ["confirmed_at", Mon, 30 Jun 2014 02:00:40 UTC +00:00], ["updated_at", Mon, 30 Jun 2014 02:00:40 UTC +00:00]]
+  [1m[35m (0.0ms)[0m  RELEASE SAVEPOINT active_record_1
+Processing by Api::V1::SessionsController#create as HTML
+  Parameters: {"user"=>{"email"=>"asd@def.com", "password"=>"[FILTERED]", "authentication_token"=>"asd"}}
+  [1m[36mUser Load (0.0ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."email" = 'asd@def.com' LIMIT 1[0m
+Completed 200 OK in 12ms (Views: 0.0ms | ActiveRecord: 0.0ms)
+  [1m[35mUser Load (0.0ms)[0m  SELECT "users".* FROM "users" WHERE "users"."email" = 'asd@def.com' LIMIT 1
+  [1m[36m (1.0ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (1.0ms)[0m  UPDATE "users" SET "last_sign_in_at" = ?, "current_sign_in_at" = ?, "last_sign_in_ip" = ?, "current_sign_in_ip" = ?, "sign_in_count" = ?, "updated_at" = ? WHERE "users"."id" = 1  [["last_sign_in_at", Mon, 30 Jun 2014 02:00:40 UTC +00:00], ["current_sign_in_at", Mon, 30 Jun 2014 02:00:40 UTC +00:00], ["last_sign_in_ip", "0.0.0.0"], ["current_sign_in_ip", "0.0.0.0"], ["sign_in_count", 1], ["updated_at", Mon, 30 Jun 2014 02:00:40 UTC +00:00]]
+  [1m[36m (0.0ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  rollback transaction
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  SAVEPOINT active_record_1
+  [1m[36mUser Exists (1.0ms)[0m  [1mSELECT 1 AS one FROM "users" WHERE "users"."email" = 'asd@def.com' LIMIT 1[0m
+  [1m[35mUser Load (0.0ms)[0m  SELECT "users".* FROM "users" WHERE "users"."confirmation_token" = 'hExHxFHTMorukBAZYypq' LIMIT 1
+Binary data inserted for `string` type on column `encrypted_password`
+  [1m[36mSQL (1.0ms)[0m  [1mINSERT INTO "users" ("authentication_token", "confirmation_sent_at", "confirmation_token", "created_at", "email", "encrypted_password", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["authentication_token", "asd"], ["confirmation_sent_at", Mon, 30 Jun 2014 02:00:40 UTC +00:00], ["confirmation_token", "hExHxFHTMorukBAZYypq"], ["created_at", Mon, 30 Jun 2014 02:00:40 UTC +00:00], ["email", "asd@def.com"], ["encrypted_password", "$2a$04$7gPUs3b0jwyW6P8rihJnauZpSRaIDLOun7E2Ugkm2fQaReMvVScBK"], ["updated_at", Mon, 30 Jun 2014 02:00:40 UTC +00:00]]
+
+Sent mail to asd@def.com (5.0ms)
+Date: Mon, 30 Jun 2014 10:00:40 +0800
+From: fengwujioutian@163.com
+Reply-To: fengwujioutian@163.com
+To: asd@def.com
+Message-ID: <53b0c4c8473a3_af81d0e48816b4@PC201308121538.mail>
+Subject: Confirmation instructions
+Mime-Version: 1.0
+Content-Type: text/html;
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+<p>Welcome asd@def.com!</p>
+
+<p>You can confirm your account email through the link below:</p>
+
+<p><a href="http://localhost:3000/users/confirmation?confirmation_token=hExHxFHTMorukBAZYypq">Confirm my account</a></p>
+
+  [1m[35m (0.0ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36m (0.0ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (1.0ms)[0m  UPDATE "users" SET "confirmation_token" = ?, "confirmed_at" = ?, "updated_at" = ? WHERE "users"."id" = 1  [["confirmation_token", nil], ["confirmed_at", Mon, 30 Jun 2014 02:00:40 UTC +00:00], ["updated_at", Mon, 30 Jun 2014 02:00:40 UTC +00:00]]
+  [1m[36m (0.0ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Processing by Api::V1::SessionsController#create as HTML
+  Parameters: {"user"=>{"email"=>"asd@sad.com", "password"=>"[FILTERED]"}}
+  [1m[35mUser Load (0.0ms)[0m  SELECT "users".* FROM "users" WHERE "users"."email" = 'asd@sad.com' LIMIT 1
+Completed 401 Unauthorized in 2ms (Views: 0.0ms | ActiveRecord: 0.0ms)
+  [1m[36mUser Load (0.0ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."email" = 'asd@sad.com' LIMIT 1[0m
+  [1m[35m (1.0ms)[0m  rollback transaction
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  SAVEPOINT active_record_1
+  [1m[36mUser Exists (0.0ms)[0m  [1mSELECT 1 AS one FROM "users" WHERE "users"."email" = 'asd@def.com' LIMIT 1[0m
+  [1m[35mUser Load (0.0ms)[0m  SELECT "users".* FROM "users" WHERE "users"."confirmation_token" = 'aovqzWUyzzq3jiqnExpE' LIMIT 1
+Binary data inserted for `string` type on column `encrypted_password`
+  [1m[36mSQL (1.0ms)[0m  [1mINSERT INTO "users" ("authentication_token", "confirmation_sent_at", "confirmation_token", "created_at", "email", "encrypted_password", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["authentication_token", "asd"], ["confirmation_sent_at", Mon, 30 Jun 2014 02:00:40 UTC +00:00], ["confirmation_token", "aovqzWUyzzq3jiqnExpE"], ["created_at", Mon, 30 Jun 2014 02:00:40 UTC +00:00], ["email", "asd@def.com"], ["encrypted_password", "$2a$04$RPsvRQqyViGS3yfqPwcpvuI7NHxJlgRK6v3IK4ytxWCHx5VZ8zHVu"], ["updated_at", Mon, 30 Jun 2014 02:00:40 UTC +00:00]]
+
+Sent mail to asd@def.com (5.0ms)
+Date: Mon, 30 Jun 2014 10:00:40 +0800
+From: fengwujioutian@163.com
+Reply-To: fengwujioutian@163.com
+To: asd@def.com
+Message-ID: <53b0c4c84e8d4_af81d0e4881716@PC201308121538.mail>
+Subject: Confirmation instructions
+Mime-Version: 1.0
+Content-Type: text/html;
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+<p>Welcome asd@def.com!</p>
+
+<p>You can confirm your account email through the link below:</p>
+
+<p><a href="http://localhost:3000/users/confirmation?confirmation_token=aovqzWUyzzq3jiqnExpE">Confirm my account</a></p>
+
+  [1m[35m (0.0ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36m (0.0ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (1.0ms)[0m  UPDATE "users" SET "confirmation_token" = ?, "confirmed_at" = ?, "updated_at" = ? WHERE "users"."id" = 1  [["confirmation_token", nil], ["confirmed_at", Mon, 30 Jun 2014 02:00:40 UTC +00:00], ["updated_at", Mon, 30 Jun 2014 02:00:40 UTC +00:00]]
+  [1m[36m (0.0ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Processing by Api::V1::SessionsController#destroy as HTML
+  Parameters: {"auth_token"=>"asd"}
+  [1m[35mUser Load (0.0ms)[0m  SELECT "users".* FROM "users" WHERE "users"."authentication_token" = 'asd' LIMIT 1
+  [1m[36mUser Load (0.0ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."authentication_token" = 'YCF6s6PThgZ7zWwsDa3s' LIMIT 1[0m
+  [1m[35m (0.0ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (0.0ms)[0m  [1mUPDATE "users" SET "authentication_token" = ?, "updated_at" = ? WHERE "users"."id" = 1[0m  [["authentication_token", "YCF6s6PThgZ7zWwsDa3s"], ["updated_at", Mon, 30 Jun 2014 02:00:40 UTC +00:00]]
+  [1m[35m (0.0ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36mUser Load (0.0ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1[0m
+  [1m[35m (0.0ms)[0m  SAVEPOINT active_record_1
+  [1m[36m (0.0ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Completed 200 OK in 7ms (Views: 0.0ms | ActiveRecord: 0.0ms)
+  [1m[35m (0.0ms)[0m  rollback transaction
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  SAVEPOINT active_record_1
+  [1m[36mUser Exists (0.0ms)[0m  [1mSELECT 1 AS one FROM "users" WHERE "users"."email" = 'asd@def.com' LIMIT 1[0m
+  [1m[35mUser Load (0.0ms)[0m  SELECT "users".* FROM "users" WHERE "users"."confirmation_token" = 'i236c1iityRjui2uxLvv' LIMIT 1
+Binary data inserted for `string` type on column `encrypted_password`
+  [1m[36mSQL (0.0ms)[0m  [1mINSERT INTO "users" ("authentication_token", "confirmation_sent_at", "confirmation_token", "created_at", "email", "encrypted_password", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["authentication_token", "asd"], ["confirmation_sent_at", Mon, 30 Jun 2014 02:00:40 UTC +00:00], ["confirmation_token", "i236c1iityRjui2uxLvv"], ["created_at", Mon, 30 Jun 2014 02:00:40 UTC +00:00], ["email", "asd@def.com"], ["encrypted_password", "$2a$04$un7TfiLqwpkSzxatKZbSGuhdGMmkoOLiNMrrvykGgajti/FlPCza."], ["updated_at", Mon, 30 Jun 2014 02:00:40 UTC +00:00]]
+
+Sent mail to asd@def.com (5.0ms)
+Date: Mon, 30 Jun 2014 10:00:40 +0800
+From: fengwujioutian@163.com
+Reply-To: fengwujioutian@163.com
+To: asd@def.com
+Message-ID: <53b0c4c8561ee_af81d0e48818c8@PC201308121538.mail>
+Subject: Confirmation instructions
+Mime-Version: 1.0
+Content-Type: text/html;
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+<p>Welcome asd@def.com!</p>
+
+<p>You can confirm your account email through the link below:</p>
+
+<p><a href="http://localhost:3000/users/confirmation?confirmation_token=i236c1iityRjui2uxLvv">Confirm my account</a></p>
+
+  [1m[35m (0.0ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36m (0.0ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.0ms)[0m  UPDATE "users" SET "confirmation_token" = ?, "confirmed_at" = ?, "updated_at" = ? WHERE "users"."id" = 1  [["confirmation_token", nil], ["confirmed_at", Mon, 30 Jun 2014 02:00:40 UTC +00:00], ["updated_at", Mon, 30 Jun 2014 02:00:40 UTC +00:00]]
+  [1m[36m (0.0ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Processing by Api::V1::SessionsController#destroy as JSON
+  [1m[35mUser Load (0.0ms)[0m  SELECT "users".* FROM "users" WHERE "users"."authentication_token" IS NULL LIMIT 1
+Filter chain halted as :validate_auth_token rendered or redirected
+Completed 401 Unauthorized in 1ms (Views: 0.0ms | ActiveRecord: 0.0ms)
+  [1m[36m (1.0ms)[0m  [1mrollback transaction[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (1.0ms)[0m  begin transaction
+  [1m[36m (0.0ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mUser Exists (0.0ms)[0m  SELECT 1 AS one FROM "users" WHERE "users"."email" = 'asd@def.com' LIMIT 1
+  [1m[36mUser Load (0.0ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."confirmation_token" = 'SsoXtSgpxEyWectSqppg' LIMIT 1[0m
+Binary data inserted for `string` type on column `encrypted_password`
+  [1m[35mSQL (4.0ms)[0m  INSERT INTO "users" ("authentication_token", "confirmation_sent_at", "confirmation_token", "created_at", "email", "encrypted_password", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)  [["authentication_token", "asd"], ["confirmation_sent_at", Mon, 30 Jun 2014 02:01:03 UTC +00:00], ["confirmation_token", "SsoXtSgpxEyWectSqppg"], ["created_at", Mon, 30 Jun 2014 02:01:03 UTC +00:00], ["email", "asd@def.com"], ["encrypted_password", "$2a$04$BfW/7epASiVNS7gNfd675e8NFifnYR/dRQawLNE4X0Jv9LXYCZj8m"], ["updated_at", Mon, 30 Jun 2014 02:01:03 UTC +00:00]]
+  Rendered devise/mailer/confirmation_instructions.html.erb (2.0ms)
+
+Sent mail to asd@def.com (11.0ms)
+Date: Mon, 30 Jun 2014 10:01:03 +0800
+From: fengwujioutian@163.com
+Reply-To: fengwujioutian@163.com
+To: asd@def.com
+Message-ID: <53b0c4df6a766_18d0280e381596@PC201308121538.mail>
+Subject: Confirmation instructions
+Mime-Version: 1.0
+Content-Type: text/html;
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+<p>Welcome asd@def.com!</p>
+
+<p>You can confirm your account email through the link below:</p>
+
+<p><a href="http://localhost:3000/users/confirmation?confirmation_token=SsoXtSgpxEyWectSqppg">Confirm my account</a></p>
+
+  [1m[36m (0.0ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (0.0ms)[0m  [1mUPDATE "users" SET "confirmation_token" = ?, "confirmed_at" = ?, "updated_at" = ? WHERE "users"."id" = 1[0m  [["confirmation_token", nil], ["confirmed_at", Mon, 30 Jun 2014 02:01:03 UTC +00:00], ["updated_at", Mon, 30 Jun 2014 02:01:03 UTC +00:00]]
+  [1m[35m (0.0ms)[0m  RELEASE SAVEPOINT active_record_1
+Processing by Api::V1::SessionsController#destroy as JSON
+  [1m[36mUser Load (1.0ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."authentication_token" IS NULL LIMIT 1[0m
+Filter chain halted as :validate_auth_token rendered or redirected
+Completed 401 Unauthorized in 1ms (Views: 0.0ms | ActiveRecord: 1.0ms)
+  [1m[35m (0.0ms)[0m  rollback transaction
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  SAVEPOINT active_record_1
+  [1m[36mUser Exists (0.0ms)[0m  [1mSELECT 1 AS one FROM "users" WHERE "users"."email" = 'asd@def.com' LIMIT 1[0m
+  [1m[35mUser Load (0.0ms)[0m  SELECT "users".* FROM "users" WHERE "users"."confirmation_token" = 'LhKLzHf9dT62xDTwYpxD' LIMIT 1
+Binary data inserted for `string` type on column `encrypted_password`
+  [1m[36mSQL (1.0ms)[0m  [1mINSERT INTO "users" ("authentication_token", "confirmation_sent_at", "confirmation_token", "created_at", "email", "encrypted_password", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["authentication_token", "asd"], ["confirmation_sent_at", Mon, 30 Jun 2014 02:01:03 UTC +00:00], ["confirmation_token", "LhKLzHf9dT62xDTwYpxD"], ["created_at", Mon, 30 Jun 2014 02:01:03 UTC +00:00], ["email", "asd@def.com"], ["encrypted_password", "$2a$04$BjaFMBr0uU9B2bzF0fX3euTFNPgbf.0Ki.yvRCEe3vtQmHU9grdUe"], ["updated_at", Mon, 30 Jun 2014 02:01:03 UTC +00:00]]
+
+Sent mail to asd@def.com (5.0ms)
+Date: Mon, 30 Jun 2014 10:01:03 +0800
+From: fengwujioutian@163.com
+Reply-To: fengwujioutian@163.com
+To: asd@def.com
+Message-ID: <53b0c4df72850_18d0280e3816ef@PC201308121538.mail>
+Subject: Confirmation instructions
+Mime-Version: 1.0
+Content-Type: text/html;
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+<p>Welcome asd@def.com!</p>
+
+<p>You can confirm your account email through the link below:</p>
+
+<p><a href="http://localhost:3000/users/confirmation?confirmation_token=LhKLzHf9dT62xDTwYpxD">Confirm my account</a></p>
+
+  [1m[35m (1.0ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36m (0.0ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (1.0ms)[0m  UPDATE "users" SET "confirmation_token" = ?, "confirmed_at" = ?, "updated_at" = ? WHERE "users"."id" = 1  [["confirmation_token", nil], ["confirmed_at", Mon, 30 Jun 2014 02:01:03 UTC +00:00], ["updated_at", Mon, 30 Jun 2014 02:01:03 UTC +00:00]]
+  [1m[36m (0.0ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Processing by Api::V1::SessionsController#destroy as HTML
+  Parameters: {"auth_token"=>"asd"}
+  [1m[35mUser Load (0.0ms)[0m  SELECT "users".* FROM "users" WHERE "users"."authentication_token" = 'asd' LIMIT 1
+  [1m[36mUser Load (0.0ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."authentication_token" = 'AbvUHT1ysagbenHpPyQA' LIMIT 1[0m
+  [1m[35m (0.0ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (0.0ms)[0m  [1mUPDATE "users" SET "authentication_token" = ?, "updated_at" = ? WHERE "users"."id" = 1[0m  [["authentication_token", "AbvUHT1ysagbenHpPyQA"], ["updated_at", Mon, 30 Jun 2014 02:01:03 UTC +00:00]]
+  [1m[35m (0.0ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36mUser Load (1.0ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1[0m
+  [1m[35m (0.0ms)[0m  SAVEPOINT active_record_1
+  [1m[36m (0.0ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Completed 200 OK in 12ms (Views: 1.0ms | ActiveRecord: 1.0ms)
+  [1m[35m (1.0ms)[0m  rollback transaction
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35m (1.0ms)[0m  SAVEPOINT active_record_1
+  [1m[36mUser Exists (0.0ms)[0m  [1mSELECT 1 AS one FROM "users" WHERE "users"."email" = 'asd@def.com' LIMIT 1[0m
+  [1m[35mUser Load (0.0ms)[0m  SELECT "users".* FROM "users" WHERE "users"."confirmation_token" = 'crv1ULzMqs5ZhiaZ6ckP' LIMIT 1
+Binary data inserted for `string` type on column `encrypted_password`
+  [1m[36mSQL (1.0ms)[0m  [1mINSERT INTO "users" ("authentication_token", "confirmation_sent_at", "confirmation_token", "created_at", "email", "encrypted_password", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["authentication_token", "asd"], ["confirmation_sent_at", Mon, 30 Jun 2014 02:01:03 UTC +00:00], ["confirmation_token", "crv1ULzMqs5ZhiaZ6ckP"], ["created_at", Mon, 30 Jun 2014 02:01:03 UTC +00:00], ["email", "asd@def.com"], ["encrypted_password", "$2a$04$e0xtTvqpD4lRyeZzRGWM6uvHjQLKMGAz6LALEK8E.RcmJuwrZRlJC"], ["updated_at", Mon, 30 Jun 2014 02:01:03 UTC +00:00]]
+
+Sent mail to asd@def.com (5.0ms)
+Date: Mon, 30 Jun 2014 10:01:03 +0800
+From: fengwujioutian@163.com
+Reply-To: fengwujioutian@163.com
+To: asd@def.com
+Message-ID: <53b0c4df7bcc2_18d0280e38173e@PC201308121538.mail>
+Subject: Confirmation instructions
+Mime-Version: 1.0
+Content-Type: text/html;
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+<p>Welcome asd@def.com!</p>
+
+<p>You can confirm your account email through the link below:</p>
+
+<p><a href="http://localhost:3000/users/confirmation?confirmation_token=crv1ULzMqs5ZhiaZ6ckP">Confirm my account</a></p>
+
+  [1m[35m (0.0ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36m (0.0ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (1.0ms)[0m  UPDATE "users" SET "confirmation_token" = ?, "confirmed_at" = ?, "updated_at" = ? WHERE "users"."id" = 1  [["confirmation_token", nil], ["confirmed_at", Mon, 30 Jun 2014 02:01:03 UTC +00:00], ["updated_at", Mon, 30 Jun 2014 02:01:03 UTC +00:00]]
+  [1m[36m (0.0ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Processing by Api::V1::SessionsController#create as HTML
+  Parameters: {"user"=>{"email"=>"asd@sad.com", "password"=>"[FILTERED]"}}
+  [1m[35mUser Load (0.0ms)[0m  SELECT "users".* FROM "users" WHERE "users"."email" = 'asd@sad.com' LIMIT 1
+Completed 401 Unauthorized in 6ms (Views: 0.0ms | ActiveRecord: 0.0ms)
+  [1m[36mUser Load (0.0ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."email" = 'asd@sad.com' LIMIT 1[0m
+  [1m[35m (1.0ms)[0m  rollback transaction
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  SAVEPOINT active_record_1
+  [1m[36mUser Exists (0.0ms)[0m  [1mSELECT 1 AS one FROM "users" WHERE "users"."email" = 'asd@def.com' LIMIT 1[0m
+  [1m[35mUser Load (0.0ms)[0m  SELECT "users".* FROM "users" WHERE "users"."confirmation_token" = '6wMNppJjaSNoZ4qzNSzs' LIMIT 1
+Binary data inserted for `string` type on column `encrypted_password`
+  [1m[36mSQL (1.0ms)[0m  [1mINSERT INTO "users" ("authentication_token", "confirmation_sent_at", "confirmation_token", "created_at", "email", "encrypted_password", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["authentication_token", "asd"], ["confirmation_sent_at", Mon, 30 Jun 2014 02:01:03 UTC +00:00], ["confirmation_token", "6wMNppJjaSNoZ4qzNSzs"], ["created_at", Mon, 30 Jun 2014 02:01:03 UTC +00:00], ["email", "asd@def.com"], ["encrypted_password", "$2a$04$6te0LFr4hOTPmGXQxHCpx.gpdNOGkXhVMrxYhwnYzj/B5pSkPQtuS"], ["updated_at", Mon, 30 Jun 2014 02:01:03 UTC +00:00]]
+
+Sent mail to asd@def.com (5.0ms)
+Date: Mon, 30 Jun 2014 10:01:03 +0800
+From: fengwujioutian@163.com
+Reply-To: fengwujioutian@163.com
+To: asd@def.com
+Message-ID: <53b0c4df8457c_18d0280e381893@PC201308121538.mail>
+Subject: Confirmation instructions
+Mime-Version: 1.0
+Content-Type: text/html;
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+<p>Welcome asd@def.com!</p>
+
+<p>You can confirm your account email through the link below:</p>
+
+<p><a href="http://localhost:3000/users/confirmation?confirmation_token=6wMNppJjaSNoZ4qzNSzs">Confirm my account</a></p>
+
+  [1m[35m (0.0ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36m (0.0ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (1.0ms)[0m  UPDATE "users" SET "confirmation_token" = ?, "confirmed_at" = ?, "updated_at" = ? WHERE "users"."id" = 1  [["confirmation_token", nil], ["confirmed_at", Mon, 30 Jun 2014 02:01:03 UTC +00:00], ["updated_at", Mon, 30 Jun 2014 02:01:03 UTC +00:00]]
+  [1m[36m (0.0ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Processing by Api::V1::SessionsController#create as HTML
+  Parameters: {"user"=>{"email"=>"asd@def.com", "password"=>"[FILTERED]", "authentication_token"=>"asd"}}
+  [1m[35mUser Load (0.0ms)[0m  SELECT "users".* FROM "users" WHERE "users"."email" = 'asd@def.com' LIMIT 1
+Completed 200 OK in 4ms (Views: 0.0ms | ActiveRecord: 0.0ms)
+  [1m[36mUser Load (1.0ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."email" = 'asd@def.com' LIMIT 1[0m
+  [1m[35m (0.0ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (0.0ms)[0m  [1mUPDATE "users" SET "last_sign_in_at" = ?, "current_sign_in_at" = ?, "last_sign_in_ip" = ?, "current_sign_in_ip" = ?, "sign_in_count" = ?, "updated_at" = ? WHERE "users"."id" = 1[0m  [["last_sign_in_at", Mon, 30 Jun 2014 02:01:03 UTC +00:00], ["current_sign_in_at", Mon, 30 Jun 2014 02:01:03 UTC +00:00], ["last_sign_in_ip", "0.0.0.0"], ["current_sign_in_ip", "0.0.0.0"], ["sign_in_count", 1], ["updated_at", Mon, 30 Jun 2014 02:01:03 UTC +00:00]]
+  [1m[35m (0.0ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36m (1.0ms)[0m  [1mrollback transaction[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36m (0.0ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mUser Exists (0.0ms)[0m  SELECT 1 AS one FROM "users" WHERE "users"."email" = 'asd@def.com' LIMIT 1
+  [1m[36mUser Load (1.0ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."confirmation_token" = 'smXAcPQR2zXXHfev6jKR' LIMIT 1[0m
+Binary data inserted for `string` type on column `encrypted_password`
+  [1m[35mSQL (5.0ms)[0m  INSERT INTO "users" ("authentication_token", "confirmation_sent_at", "confirmation_token", "created_at", "email", "encrypted_password", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)  [["authentication_token", "asd"], ["confirmation_sent_at", Mon, 30 Jun 2014 02:01:52 UTC +00:00], ["confirmation_token", "smXAcPQR2zXXHfev6jKR"], ["created_at", Mon, 30 Jun 2014 02:01:52 UTC +00:00], ["email", "asd@def.com"], ["encrypted_password", "$2a$04$zMpU0UTEqWohoHeZ5/gNFOsNYxKgD0cADfyu1CxGodhOVzf3Fhavm"], ["updated_at", Mon, 30 Jun 2014 02:01:52 UTC +00:00]]
+  Rendered devise/mailer/confirmation_instructions.html.erb (2.0ms)
+
+Sent mail to asd@def.com (11.0ms)
+Date: Mon, 30 Jun 2014 10:01:52 +0800
+From: fengwujioutian@163.com
+Reply-To: fengwujioutian@163.com
+To: asd@def.com
+Message-ID: <53b0c510de24c_1984280e3862648@PC201308121538.mail>
+Subject: Confirmation instructions
+Mime-Version: 1.0
+Content-Type: text/html;
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+<p>Welcome asd@def.com!</p>
+
+<p>You can confirm your account email through the link below:</p>
+
+<p><a href="http://localhost:3000/users/confirmation?confirmation_token=smXAcPQR2zXXHfev6jKR">Confirm my account</a></p>
+
+  [1m[36m (0.0ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (1.0ms)[0m  [1mUPDATE "users" SET "confirmation_token" = ?, "confirmed_at" = ?, "updated_at" = ? WHERE "users"."id" = 1[0m  [["confirmation_token", nil], ["confirmed_at", Mon, 30 Jun 2014 02:01:52 UTC +00:00], ["updated_at", Mon, 30 Jun 2014 02:01:52 UTC +00:00]]
+  [1m[35m (0.0ms)[0m  RELEASE SAVEPOINT active_record_1
+Processing by Api::V1::SessionsController#create as HTML
+  Parameters: {"user"=>{"email"=>"asd@def.com", "password"=>"[FILTERED]", "authentication_token"=>"asd"}}
+  [1m[36mUser Load (0.0ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."email" = 'asd@def.com' LIMIT 1[0m
+Completed 200 OK in 9ms (Views: 1.0ms | ActiveRecord: 0.0ms)
+  [1m[35mUser Load (0.0ms)[0m  SELECT "users".* FROM "users" WHERE "users"."email" = 'asd@def.com' LIMIT 1
+  [1m[36m (0.0ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.0ms)[0m  UPDATE "users" SET "last_sign_in_at" = ?, "current_sign_in_at" = ?, "last_sign_in_ip" = ?, "current_sign_in_ip" = ?, "sign_in_count" = ?, "updated_at" = ? WHERE "users"."id" = 1  [["last_sign_in_at", Mon, 30 Jun 2014 02:01:52 UTC +00:00], ["current_sign_in_at", Mon, 30 Jun 2014 02:01:52 UTC +00:00], ["last_sign_in_ip", "0.0.0.0"], ["current_sign_in_ip", "0.0.0.0"], ["sign_in_count", 1], ["updated_at", Mon, 30 Jun 2014 02:01:52 UTC +00:00]]
+  [1m[36m (0.0ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (1.0ms)[0m  rollback transaction
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  SAVEPOINT active_record_1
+  [1m[36mUser Exists (1.0ms)[0m  [1mSELECT 1 AS one FROM "users" WHERE "users"."email" = 'asd@def.com' LIMIT 1[0m
+  [1m[35mUser Load (1.0ms)[0m  SELECT "users".* FROM "users" WHERE "users"."confirmation_token" = 'XbDWqB9LxjPkCTFYozZZ' LIMIT 1
+Binary data inserted for `string` type on column `encrypted_password`
+  [1m[36mSQL (1.0ms)[0m  [1mINSERT INTO "users" ("authentication_token", "confirmation_sent_at", "confirmation_token", "created_at", "email", "encrypted_password", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["authentication_token", "asd"], ["confirmation_sent_at", Mon, 30 Jun 2014 02:01:52 UTC +00:00], ["confirmation_token", "XbDWqB9LxjPkCTFYozZZ"], ["created_at", Mon, 30 Jun 2014 02:01:52 UTC +00:00], ["email", "asd@def.com"], ["encrypted_password", "$2a$04$b4u8vSoKySvKkBmmW2jrX.My7WIdh9P8O/bLgWypLNlyqJrC..cSG"], ["updated_at", Mon, 30 Jun 2014 02:01:52 UTC +00:00]]
+
+Sent mail to asd@def.com (5.0ms)
+Date: Mon, 30 Jun 2014 10:01:52 +0800
+From: fengwujioutian@163.com
+Reply-To: fengwujioutian@163.com
+To: asd@def.com
+Message-ID: <53b0c510e9dcf_1984280e3862718@PC201308121538.mail>
+Subject: Confirmation instructions
+Mime-Version: 1.0
+Content-Type: text/html;
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+<p>Welcome asd@def.com!</p>
+
+<p>You can confirm your account email through the link below:</p>
+
+<p><a href="http://localhost:3000/users/confirmation?confirmation_token=XbDWqB9LxjPkCTFYozZZ">Confirm my account</a></p>
+
+  [1m[35m (0.0ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36m (0.0ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (1.0ms)[0m  UPDATE "users" SET "confirmation_token" = ?, "confirmed_at" = ?, "updated_at" = ? WHERE "users"."id" = 1  [["confirmation_token", nil], ["confirmed_at", Mon, 30 Jun 2014 02:01:52 UTC +00:00], ["updated_at", Mon, 30 Jun 2014 02:01:52 UTC +00:00]]
+  [1m[36m (0.0ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Processing by Api::V1::SessionsController#create as HTML
+  Parameters: {"user"=>{"email"=>"asd@sad.com", "password"=>"[FILTERED]"}}
+  [1m[35mUser Load (0.0ms)[0m  SELECT "users".* FROM "users" WHERE "users"."email" = 'asd@sad.com' LIMIT 1
+Completed 401 Unauthorized in 2ms (Views: 0.0ms | ActiveRecord: 0.0ms)
+  [1m[36mUser Load (0.0ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."email" = 'asd@sad.com' LIMIT 1[0m
+  [1m[35m (1.0ms)[0m  rollback transaction
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  SAVEPOINT active_record_1
+  [1m[36mUser Exists (1.0ms)[0m  [1mSELECT 1 AS one FROM "users" WHERE "users"."email" = 'asd@def.com' LIMIT 1[0m
+  [1m[35mUser Load (0.0ms)[0m  SELECT "users".* FROM "users" WHERE "users"."confirmation_token" = 'ZbzpxsoQqUsfmAMZmkxp' LIMIT 1
+Binary data inserted for `string` type on column `encrypted_password`
+  [1m[36mSQL (1.0ms)[0m  [1mINSERT INTO "users" ("authentication_token", "confirmation_sent_at", "confirmation_token", "created_at", "email", "encrypted_password", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["authentication_token", "asd"], ["confirmation_sent_at", Mon, 30 Jun 2014 02:01:52 UTC +00:00], ["confirmation_token", "ZbzpxsoQqUsfmAMZmkxp"], ["created_at", Mon, 30 Jun 2014 02:01:52 UTC +00:00], ["email", "asd@def.com"], ["encrypted_password", "$2a$04$48G.ImYzoC58ZAG3R6pQsOIONKQH341OwP7nxhD5k5D4ZHC7lmQgC"], ["updated_at", Mon, 30 Jun 2014 02:01:52 UTC +00:00]]
+
+Sent mail to asd@def.com (6.0ms)
+Date: Mon, 30 Jun 2014 10:01:52 +0800
+From: fengwujioutian@163.com
+Reply-To: fengwujioutian@163.com
+To: asd@def.com
+Message-ID: <53b0c510f1301_1984280e386281d@PC201308121538.mail>
+Subject: Confirmation instructions
+Mime-Version: 1.0
+Content-Type: text/html;
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+<p>Welcome asd@def.com!</p>
+
+<p>You can confirm your account email through the link below:</p>
+
+<p><a href="http://localhost:3000/users/confirmation?confirmation_token=ZbzpxsoQqUsfmAMZmkxp">Confirm my account</a></p>
+
+  [1m[35m (0.0ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36m (0.0ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.0ms)[0m  UPDATE "users" SET "confirmation_token" = ?, "confirmed_at" = ?, "updated_at" = ? WHERE "users"."id" = 1  [["confirmation_token", nil], ["confirmed_at", Mon, 30 Jun 2014 02:01:52 UTC +00:00], ["updated_at", Mon, 30 Jun 2014 02:01:52 UTC +00:00]]
+  [1m[36m (0.0ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Processing by Api::V1::SessionsController#destroy as HTML
+  Parameters: {"auth_token"=>"asd"}
+  [1m[35mUser Load (0.0ms)[0m  SELECT "users".* FROM "users" WHERE "users"."authentication_token" = 'asd' LIMIT 1
+  [1m[36mUser Load (1.0ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."authentication_token" = 'GpvaC6QUhowstpUTnZQt' LIMIT 1[0m
+  [1m[35m (0.0ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (0.0ms)[0m  [1mUPDATE "users" SET "authentication_token" = ?, "updated_at" = ? WHERE "users"."id" = 1[0m  [["authentication_token", "GpvaC6QUhowstpUTnZQt"], ["updated_at", Mon, 30 Jun 2014 02:01:53 UTC +00:00]]
+  [1m[35m (0.0ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36mUser Load (0.0ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1[0m
+  [1m[35m (0.0ms)[0m  SAVEPOINT active_record_1
+  [1m[36m (0.0ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Completed 200 OK in 11ms (Views: 0.0ms | ActiveRecord: 1.0ms)
+  [1m[35m (0.0ms)[0m  rollback transaction
+  [1m[36m (1.0ms)[0m  [1mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  SAVEPOINT active_record_1
+  [1m[36mUser Exists (0.0ms)[0m  [1mSELECT 1 AS one FROM "users" WHERE "users"."email" = 'asd@def.com' LIMIT 1[0m
+  [1m[35mUser Load (0.0ms)[0m  SELECT "users".* FROM "users" WHERE "users"."confirmation_token" = 'aFyix4NvsPjBqqZxgHYx' LIMIT 1
+Binary data inserted for `string` type on column `encrypted_password`
+  [1m[36mSQL (1.0ms)[0m  [1mINSERT INTO "users" ("authentication_token", "confirmation_sent_at", "confirmation_token", "created_at", "email", "encrypted_password", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["authentication_token", "asd"], ["confirmation_sent_at", Mon, 30 Jun 2014 02:01:53 UTC +00:00], ["confirmation_token", "aFyix4NvsPjBqqZxgHYx"], ["created_at", Mon, 30 Jun 2014 02:01:53 UTC +00:00], ["email", "asd@def.com"], ["encrypted_password", "$2a$04$6P7JH2u.cGN3Msdjdyku6OTYSzatLLpH3HkPJW4E0B3nqlnSDUiW6"], ["updated_at", Mon, 30 Jun 2014 02:01:53 UTC +00:00]]
+
+Sent mail to asd@def.com (5.0ms)
+Date: Mon, 30 Jun 2014 10:01:53 +0800
+From: fengwujioutian@163.com
+Reply-To: fengwujioutian@163.com
+To: asd@def.com
+Message-ID: <53b0c5115d63_1984280e38629c1@PC201308121538.mail>
+Subject: Confirmation instructions
+Mime-Version: 1.0
+Content-Type: text/html;
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+<p>Welcome asd@def.com!</p>
+
+<p>You can confirm your account email through the link below:</p>
+
+<p><a href="http://localhost:3000/users/confirmation?confirmation_token=aFyix4NvsPjBqqZxgHYx">Confirm my account</a></p>
+
+  [1m[35m (0.0ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36m (0.0ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.0ms)[0m  UPDATE "users" SET "confirmation_token" = ?, "confirmed_at" = ?, "updated_at" = ? WHERE "users"."id" = 1  [["confirmation_token", nil], ["confirmed_at", Mon, 30 Jun 2014 02:01:53 UTC +00:00], ["updated_at", Mon, 30 Jun 2014 02:01:53 UTC +00:00]]
+  [1m[36m (0.0ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Processing by Api::V1::SessionsController#destroy as JSON
+  [1m[35mUser Load (0.0ms)[0m  SELECT "users".* FROM "users" WHERE "users"."authentication_token" IS NULL LIMIT 1
+Filter chain halted as :validate_auth_token rendered or redirected
+Completed 401 Unauthorized in 1ms (Views: 0.0ms | ActiveRecord: 0.0ms)
+  [1m[36m (0.0ms)[0m  [1mrollback transaction[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36m (0.0ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mUser Exists (0.0ms)[0m  SELECT 1 AS one FROM "users" WHERE "users"."email" = 'asd@def.com' LIMIT 1
+  [1m[36mUser Load (0.0ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."confirmation_token" = '3uXUNNK8kVFsDs8yTdPK' LIMIT 1[0m
+Binary data inserted for `string` type on column `encrypted_password`
+  [1m[35mSQL (24.0ms)[0m  INSERT INTO "users" ("authentication_token", "confirmation_sent_at", "confirmation_token", "created_at", "email", "encrypted_password", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)  [["authentication_token", "asd"], ["confirmation_sent_at", Mon, 30 Jun 2014 02:50:17 UTC +00:00], ["confirmation_token", "3uXUNNK8kVFsDs8yTdPK"], ["created_at", Mon, 30 Jun 2014 02:50:17 UTC +00:00], ["email", "asd@def.com"], ["encrypted_password", "$2a$04$.eMOfPgdBPADsH855.5tAugb0fnEVgV6cIOD8MN3lnTmThcji93su"], ["updated_at", Mon, 30 Jun 2014 02:50:17 UTC +00:00]]
+  Rendered devise/mailer/confirmation_instructions.html.erb (2.0ms)
+
+Sent mail to asd@def.com (12.0ms)
+Date: Mon, 30 Jun 2014 10:50:18 +0800
+From: fengwujioutian@163.com
+Reply-To: fengwujioutian@163.com
+To: asd@def.com
+Message-ID: <53b0d06a138c2_151c280e386688b@PC201308121538.mail>
+Subject: Confirmation instructions
+Mime-Version: 1.0
+Content-Type: text/html;
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+<p>Welcome asd@def.com!</p>
+
+<p>You can confirm your account email through the link below:</p>
+
+<p><a href="http://localhost:3000/users/confirmation?confirmation_token=3uXUNNK8kVFsDs8yTdPK">Confirm my account</a></p>
+
+  [1m[36m (0.0ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (1.0ms)[0m  [1mUPDATE "users" SET "confirmation_token" = ?, "confirmed_at" = ?, "updated_at" = ? WHERE "users"."id" = 1[0m  [["confirmation_token", nil], ["confirmed_at", Mon, 30 Jun 2014 02:50:18 UTC +00:00], ["updated_at", Mon, 30 Jun 2014 02:50:18 UTC +00:00]]
+  [1m[35m (0.0ms)[0m  RELEASE SAVEPOINT active_record_1
+Processing by Api::V1::SessionsController#create as HTML
+  Parameters: {"user"=>{"email"=>"asd@def.com", "password"=>"[FILTERED]", "authentication_token"=>"asd"}}
+  [1m[36mUser Load (0.0ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."email" = 'asd@def.com' LIMIT 1[0m
+Completed 200 OK in 9ms (Views: 0.0ms | ActiveRecord: 0.0ms)
+  [1m[35mUser Load (0.0ms)[0m  SELECT "users".* FROM "users" WHERE "users"."email" = 'asd@def.com' LIMIT 1
+  [1m[36m (0.0ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.0ms)[0m  UPDATE "users" SET "last_sign_in_at" = ?, "current_sign_in_at" = ?, "last_sign_in_ip" = ?, "current_sign_in_ip" = ?, "sign_in_count" = ?, "updated_at" = ? WHERE "users"."id" = 1  [["last_sign_in_at", Mon, 30 Jun 2014 02:50:18 UTC +00:00], ["current_sign_in_at", Mon, 30 Jun 2014 02:50:18 UTC +00:00], ["last_sign_in_ip", "0.0.0.0"], ["current_sign_in_ip", "0.0.0.0"], ["sign_in_count", 1], ["updated_at", Mon, 30 Jun 2014 02:50:18 UTC +00:00]]
+  [1m[36m (0.0ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (1.0ms)[0m  rollback transaction
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35m (1.0ms)[0m  SAVEPOINT active_record_1
+  [1m[36mUser Exists (1.0ms)[0m  [1mSELECT 1 AS one FROM "users" WHERE "users"."email" = 'asd@def.com' LIMIT 1[0m
+  [1m[35mUser Load (1.0ms)[0m  SELECT "users".* FROM "users" WHERE "users"."confirmation_token" = 'R6bssnjz5MmaTJ81ATiy' LIMIT 1
+Binary data inserted for `string` type on column `encrypted_password`
+  [1m[36mSQL (2.0ms)[0m  [1mINSERT INTO "users" ("authentication_token", "confirmation_sent_at", "confirmation_token", "created_at", "email", "encrypted_password", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["authentication_token", "asd"], ["confirmation_sent_at", Mon, 30 Jun 2014 02:50:18 UTC +00:00], ["confirmation_token", "R6bssnjz5MmaTJ81ATiy"], ["created_at", Mon, 30 Jun 2014 02:50:18 UTC +00:00], ["email", "asd@def.com"], ["encrypted_password", "$2a$04$4bleJw94Y3WLdhPL6/g6QOUhH05dbcAnY9Sv2NJCL1HJYwQpS4Xyq"], ["updated_at", Mon, 30 Jun 2014 02:50:18 UTC +00:00]]
+
+Sent mail to asd@def.com (6.0ms)
+Date: Mon, 30 Jun 2014 10:50:18 +0800
+From: fengwujioutian@163.com
+Reply-To: fengwujioutian@163.com
+To: asd@def.com
+Message-ID: <53b0d06a1f82d_151c280e3866982@PC201308121538.mail>
+Subject: Confirmation instructions
+Mime-Version: 1.0
+Content-Type: text/html;
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+<p>Welcome asd@def.com!</p>
+
+<p>You can confirm your account email through the link below:</p>
+
+<p><a href="http://localhost:3000/users/confirmation?confirmation_token=R6bssnjz5MmaTJ81ATiy">Confirm my account</a></p>
+
+  [1m[35m (0.0ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36m (1.0ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (1.0ms)[0m  UPDATE "users" SET "confirmation_token" = ?, "confirmed_at" = ?, "updated_at" = ? WHERE "users"."id" = 1  [["confirmation_token", nil], ["confirmed_at", Mon, 30 Jun 2014 02:50:18 UTC +00:00], ["updated_at", Mon, 30 Jun 2014 02:50:18 UTC +00:00]]
+  [1m[36m (0.0ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Processing by Api::V1::SessionsController#create as HTML
+  Parameters: {"user"=>{"email"=>"asd@sad.com", "password"=>"[FILTERED]"}}
+  [1m[35mUser Load (0.0ms)[0m  SELECT "users".* FROM "users" WHERE "users"."email" = 'asd@sad.com' LIMIT 1
+Completed 401 Unauthorized in 2ms (Views: 0.0ms | ActiveRecord: 0.0ms)
+  [1m[36mUser Load (0.0ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."email" = 'asd@sad.com' LIMIT 1[0m
+  [1m[35m (0.0ms)[0m  rollback transaction
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  SAVEPOINT active_record_1
+  [1m[36mUser Exists (1.0ms)[0m  [1mSELECT 1 AS one FROM "users" WHERE "users"."email" = 'asd@def.com' LIMIT 1[0m
+  [1m[35mUser Load (0.0ms)[0m  SELECT "users".* FROM "users" WHERE "users"."confirmation_token" = '6AdV4zuzpqTUtz3KxDvR' LIMIT 1
+Binary data inserted for `string` type on column `encrypted_password`
+  [1m[36mSQL (1.0ms)[0m  [1mINSERT INTO "users" ("authentication_token", "confirmation_sent_at", "confirmation_token", "created_at", "email", "encrypted_password", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["authentication_token", "asd"], ["confirmation_sent_at", Mon, 30 Jun 2014 02:50:18 UTC +00:00], ["confirmation_token", "6AdV4zuzpqTUtz3KxDvR"], ["created_at", Mon, 30 Jun 2014 02:50:18 UTC +00:00], ["email", "asd@def.com"], ["encrypted_password", "$2a$04$deBVL.GZAeWwe8TnQ/3gCeFNHODoxc/aOicHG/fb0Z/.V/rDpj7mW"], ["updated_at", Mon, 30 Jun 2014 02:50:18 UTC +00:00]]
+
+Sent mail to asd@def.com (5.0ms)
+Date: Mon, 30 Jun 2014 10:50:18 +0800
+From: fengwujioutian@163.com
+Reply-To: fengwujioutian@163.com
+To: asd@def.com
+Message-ID: <53b0d06a27cff_151c280e386705b@PC201308121538.mail>
+Subject: Confirmation instructions
+Mime-Version: 1.0
+Content-Type: text/html;
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+<p>Welcome asd@def.com!</p>
+
+<p>You can confirm your account email through the link below:</p>
+
+<p><a href="http://localhost:3000/users/confirmation?confirmation_token=6AdV4zuzpqTUtz3KxDvR">Confirm my account</a></p>
+
+  [1m[35m (0.0ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36m (0.0ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (1.0ms)[0m  UPDATE "users" SET "confirmation_token" = ?, "confirmed_at" = ?, "updated_at" = ? WHERE "users"."id" = 1  [["confirmation_token", nil], ["confirmed_at", Mon, 30 Jun 2014 02:50:18 UTC +00:00], ["updated_at", Mon, 30 Jun 2014 02:50:18 UTC +00:00]]
+  [1m[36m (0.0ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Processing by Api::V1::SessionsController#destroy as HTML
+  Parameters: {"auth_token"=>"asd"}
+  [1m[35mUser Load (0.0ms)[0m  SELECT "users".* FROM "users" WHERE "users"."authentication_token" = 'asd' LIMIT 1
+  [1m[36mUser Load (0.0ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."authentication_token" = '72BPCHxHtAdaLso9Fiu8' LIMIT 1[0m
+  [1m[35m (0.0ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (1.0ms)[0m  [1mUPDATE "users" SET "authentication_token" = ?, "updated_at" = ? WHERE "users"."id" = 1[0m  [["authentication_token", "72BPCHxHtAdaLso9Fiu8"], ["updated_at", Mon, 30 Jun 2014 02:50:18 UTC +00:00]]
+  [1m[35m (0.0ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36mUser Load (0.0ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1[0m
+  [1m[35m (0.0ms)[0m  SAVEPOINT active_record_1
+  [1m[36m (0.0ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Completed 200 OK in 12ms (Views: 0.0ms | ActiveRecord: 1.0ms)
+  [1m[35m (0.0ms)[0m  rollback transaction
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35m (1.0ms)[0m  SAVEPOINT active_record_1
+  [1m[36mUser Exists (0.0ms)[0m  [1mSELECT 1 AS one FROM "users" WHERE "users"."email" = 'asd@def.com' LIMIT 1[0m
+  [1m[35mUser Load (1.0ms)[0m  SELECT "users".* FROM "users" WHERE "users"."confirmation_token" = 'y26Qt8gWxxMnmyV1Gixc' LIMIT 1
+Binary data inserted for `string` type on column `encrypted_password`
+  [1m[36mSQL (1.0ms)[0m  [1mINSERT INTO "users" ("authentication_token", "confirmation_sent_at", "confirmation_token", "created_at", "email", "encrypted_password", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["authentication_token", "asd"], ["confirmation_sent_at", Mon, 30 Jun 2014 02:50:18 UTC +00:00], ["confirmation_token", "y26Qt8gWxxMnmyV1Gixc"], ["created_at", Mon, 30 Jun 2014 02:50:18 UTC +00:00], ["email", "asd@def.com"], ["encrypted_password", "$2a$04$R4cDU3ZRH.0PPTCvba0wKe7Cnl57P4Asn3twyzpmZQQOgHP0HY3Di"], ["updated_at", Mon, 30 Jun 2014 02:50:18 UTC +00:00]]
+
+Sent mail to asd@def.com (5.0ms)
+Date: Mon, 30 Jun 2014 10:50:18 +0800
+From: fengwujioutian@163.com
+Reply-To: fengwujioutian@163.com
+To: asd@def.com
+Message-ID: <53b0d06a31171_151c280e3867156@PC201308121538.mail>
+Subject: Confirmation instructions
+Mime-Version: 1.0
+Content-Type: text/html;
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+<p>Welcome asd@def.com!</p>
+
+<p>You can confirm your account email through the link below:</p>
+
+<p><a href="http://localhost:3000/users/confirmation?confirmation_token=y26Qt8gWxxMnmyV1Gixc">Confirm my account</a></p>
+
+  [1m[35m (0.0ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36m (0.0ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (1.0ms)[0m  UPDATE "users" SET "confirmation_token" = ?, "confirmed_at" = ?, "updated_at" = ? WHERE "users"."id" = 1  [["confirmation_token", nil], ["confirmed_at", Mon, 30 Jun 2014 02:50:18 UTC +00:00], ["updated_at", Mon, 30 Jun 2014 02:50:18 UTC +00:00]]
+  [1m[36m (0.0ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Processing by Api::V1::SessionsController#destroy as JSON
+  [1m[35mUser Load (0.0ms)[0m  SELECT "users".* FROM "users" WHERE "users"."authentication_token" IS NULL LIMIT 1
+Filter chain halted as :validate_auth_token rendered or redirected
+Completed 401 Unauthorized in 2ms (Views: 0.0ms | ActiveRecord: 0.0ms)
+  [1m[36m (1.0ms)[0m  [1mrollback transaction[0m
